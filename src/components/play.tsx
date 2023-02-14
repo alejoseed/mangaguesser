@@ -156,7 +156,6 @@ async function GetImage() {
   } catch (error) {
     console.log(error);
   }
-  return ImageParams.ImageUrl
 }
 
 function PlayGame(){
