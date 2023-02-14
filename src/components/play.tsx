@@ -127,10 +127,11 @@ async function GetImage() {
   try {
     const res1 = await axios.get(ImageParams.baseUrl + ImageParams.mangaId + "/feed", {
       headers: {
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
         }
     });
-    
+
     if (res1.data.data.length === 0) {
       // change the correct answer to the next manga
       correctNum = randomNumber();
@@ -145,6 +146,7 @@ async function GetImage() {
 
     const res2 = await axios.get(ImageParams.atHome + ImageParams.chapterId, {
       headers: {
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
       }
     });
