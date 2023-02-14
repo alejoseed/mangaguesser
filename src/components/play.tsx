@@ -46,7 +46,7 @@ let ImageParams = {
   mangaName : "",
   baseUrl : corsProxy + "https://api.mangadex.org/manga/",
   atHome : corsProxy + "https://api.mangadex.org/at-home/server/",
-  imageUrl : corsProxy + "https://uploads.mangadex.org/data-saver/",
+  imageUrl : "https://uploads.mangadex.org/data-saver/",
   chapterId : "",
 }
 
