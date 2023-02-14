@@ -68,7 +68,12 @@ const CallAPI = async () => {
   for (let i = 0; i < 4; i++) {
     if (i !== correctNum) {
       apiCalls.push(
-        axios.get(mangadex, { params })
+        axios.get(mangadex, { params,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+            }
+        })
           .then((res) => {
             mangaNames[i] = res.data.data.attributes.title.en;
           })
@@ -78,7 +83,12 @@ const CallAPI = async () => {
       );
     } else {
       apiCalls.push(
-        axios.get(mangadex, { params })
+        axios.get(mangadex, { params,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+            }
+          })
           .then((res) => {
             mangaNames[correctNum] = res.data.data.attributes.title.en;
             ImageParams.mangaId = res.data.data.id;
@@ -115,7 +125,12 @@ function HandleAnswer(answer : number, manga : number) {
 
 async function GetImage() {
   try {
-    const res1 = await axios.get(ImageParams.baseUrl + ImageParams.mangaId + "/feed");
+    const res1 = await axios.get(ImageParams.baseUrl + ImageParams.mangaId + "/feed", {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+        }
+    });
+    
     if (res1.data.data.length === 0) {
       // change the correct answer to the next manga
       correctNum = randomNumber();
@@ -128,7 +143,12 @@ async function GetImage() {
     ImageParams.chapterId = res1.data.data[Math.floor(Math.random() * res1.data.data.length)].id;
     console.log(ImageParams.chapterId);
 
-    const res2 = await axios.get(ImageParams.atHome + ImageParams.chapterId);
+    const res2 = await axios.get(ImageParams.atHome + ImageParams.chapterId, {
+      headers: {
+      'Access-Control-Allow-Origin': '*'
+      }
+    });
+
     ImageParams.imageUrl += res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
     console.log(ImageParams.imageUrl);
   } catch (error) {
