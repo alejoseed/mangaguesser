@@ -38,14 +38,15 @@ export interface playColors {
   colorThree: string
   colorFour: string
 }
+let corsProxy = "https://delicate-wave-6197.fly.dev/";
 
 let ImageParams = {
   correctNum: 0,
   mangaId : "",
   mangaName : "",
-  baseUrl : "https://api.mangadex.org/manga/",
-  atHome : "https://api.mangadex.org/at-home/server/",
-  imageUrl : "https://uploads.mangadex.org/data-saver/",
+  baseUrl : corsProxy + "https://api.mangadex.org/manga/",
+  atHome : corsProxy + "https://api.mangadex.org/at-home/server/",
+  imageUrl : corsProxy + "https://uploads.mangadex.org/data-saver/",
   chapterId : "",
 }
 
@@ -53,7 +54,8 @@ let correctNum : number = 0;
 
 // call the api to get the manga title
 const CallAPI = async () => {
-  const mangadex =  "https://api.mangadex.org/manga/random?contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
+
+  const mangadex =  corsProxy + "https://api.mangadex.org/manga/random?contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
   + "&contentRating%5B%5D=erotica&contentRating%5B%5D=pornographic&includedTagsMode=AND&excludedTagsMode=OR";
   const params = new URLSearchParams();
   params.append('contentRating[]', 'safe');
@@ -70,6 +72,7 @@ const CallAPI = async () => {
       apiCalls.push(
         axios.get(mangadex, { params,
           headers: {
+            'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
             }
@@ -85,6 +88,7 @@ const CallAPI = async () => {
       apiCalls.push(
         axios.get(mangadex, { params,
           headers: {
+            'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
             }
@@ -127,6 +131,7 @@ async function GetImage() {
   try {
     const res1 = await axios.get(ImageParams.baseUrl + ImageParams.mangaId + "/feed", {
       headers: {
+        'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
         }
@@ -146,6 +151,7 @@ async function GetImage() {
 
     const res2 = await axios.get(ImageParams.atHome + ImageParams.chapterId, {
       headers: {
+      'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
       }
