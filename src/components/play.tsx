@@ -152,11 +152,11 @@ async function GetImage() {
           }
         });
     
-    ImageParams.imageUrl += corsProxy + res2.data.baseUrl + "/data-saver/" + res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
-    console.log(ImageParams.imageUrl);
+    ImageParams.imageUrl += res2.data.baseUrl + "/data-saver/" + res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
   } catch (error) {
     console.log(error);
   }
+  return ImageParams.ImageUrl
 }
 
 function PlayGame(){
