@@ -38,15 +38,14 @@ export interface playColors {
   colorThree: string
   colorFour: string
 }
-let corsProxy = "https://sparkling-wildflower-3888.fly.dev/";
+let corsProxy = "https://black-fog-8967.fly.dev/";
 
 let ImageParams = {
   correctNum: 0,
   mangaId : "",
   mangaName : "",
-  baseUrl : corsProxy + "https://api.mangadex.org/manga/",
   atHome : corsProxy + "https://api.mangadex.org/at-home/server/",
-  imageUrl : "https://uploads.mangadex.org/data-saver/",
+  imageUrl : "",
   chapterId : "",
 }
 
@@ -129,7 +128,7 @@ function HandleAnswer(answer : number, manga : number) {
 
 async function GetImage() {
   try {
-    const res1 = await axios.get(corsProxy + ImageParams.baseUrl + ImageParams.mangaId + "/feed", {
+    const res1 = await axios.get(corsProxy + "https://api.mangadex.org/manga/" + ImageParams.mangaId + "/feed", {
       headers: {
           'X-Requested-With': 'application/xml'
       }
@@ -153,7 +152,7 @@ async function GetImage() {
           }
         });
     
-    ImageParams.imageUrl += res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
+    ImageParams.imageUrl += res2.data.baseUrl + res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
     console.log(ImageParams.imageUrl);
   } catch (error) {
     console.log(error);
