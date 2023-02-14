@@ -152,7 +152,7 @@ async function GetImage() {
           }
         });
     
-    ImageParams.imageUrl += res2.data.baseUrl + res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
+    ImageParams.imageUrl += res2.data.baseUrl + "/" + res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
     console.log(ImageParams.imageUrl);
   } catch (error) {
     console.log(error);
