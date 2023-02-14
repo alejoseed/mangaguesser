@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .hamburgerItems{
+        @apply hover:text-neutral-200 duration-75;
+    }
+    body {
+        @apply bg-neutral-200;
+    }
+
+    @keyframes rollout {
+        0% {
+          transform: translateX(-100%);
+          filter: blur(5px);;
+        }
+        100% {
+          transform: translateX(0);
+          filter: blur(0);
+        }
+      }
+      .roll-out {
+        animation: 1s rollout;
+    }
+
+    .homeText{
+        @apply flex pt-5 justify-center text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center italic;
+    }
+}
+@layer components{
+    .buttonManga{
+        @apply h-12 w-12 rounded-md shadow-md hover:duration-100 hover:-translate-y-3;
+    }
+
+}
