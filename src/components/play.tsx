@@ -106,6 +106,7 @@ function PlayGame(){
   const handleImage = useCallback(
     (res: string) => {
       setMangaImageUrl(res);
+      setIsLoading(false);
     },
     [setMangaImageUrl]
   );
@@ -130,11 +131,8 @@ function PlayGame(){
       // remove blob: from the start of the string, also the port is different, it shoudl be 4000
       image = image.replace("blob:https://expressjs-postgres-production-6029.up.railway.app/", "https://expressjs-postgres-production-6029.up.railway.app/");
 
-      console.log(image);
       ImageParams.imageUrl = image;
-
       handleImage(ImageParams.imageUrl);
-      setIsLoading(false); // set isLoading to false when all the data has been fetched
     };
     fetchData();
   }, [handleManga, handleImage]);
@@ -146,10 +144,10 @@ function PlayGame(){
   if (isLoading) {
     return <div>
       <NavBar />
-      <div className="flex flex-row items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center h-screen">
         <img src={loadingScreen}></img>
+        <div>Loading</div>
       </div>
-      <div>Loading</div>
     </div>
   }
 
