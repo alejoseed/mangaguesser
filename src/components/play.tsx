@@ -38,77 +38,18 @@ export interface playColors {
   colorThree: string
   colorFour: string
 }
-let corsProxy = "https://sparkling-wildflower-3888.fly.dev/";
+let corsProxy = "https://black-fog-8967.fly.dev/";
 
 let ImageParams = {
   correctNum: 0,
   mangaId : "",
   mangaName : "",
-  baseUrl : corsProxy + "https://api.mangadex.org/manga/",
-  atHome : corsProxy + "https://api.mangadex.org/at-home/server/",
-  imageUrl : corsProxy + "https://uploads.mangadex.org/data-saver/",
+  atHome : "https://api.mangadex.org/at-home/server/",
+  imageUrl : "",
   chapterId : "",
 }
 
 let correctNum : number = 0;
-
-// call the api to get the manga title
-const CallAPI = async () => {
-
-  const mangadex =  corsProxy + "https://api.mangadex.org/manga/random?contentRating%5B%5D=safe&contentRating%5B%5D=suggestive"
-  + "&contentRating%5B%5D=erotica&contentRating%5B%5D=pornographic&includedTagsMode=AND&excludedTagsMode=OR";
-  const params = new URLSearchParams();
-  params.append('contentRating[]', 'safe');
-  params.append('contentRating[]', 'suggestive');
-  params.append('contentRating[]', 'erotica');
-  params.append('includedTagsMode', 'AND');
-  params.append('excludedTagsMode', 'OR');
-  correctNum = randomNumber();
-  const mangaNames : string[] = ["","","",""];
-  const apiCalls = [];
-  
-  for (let i = 0; i < 4; i++) {
-    if (i !== correctNum) {
-      apiCalls.push(
-        axios.get(mangadex, {
-          params: params,
-          headers: {
-              'X-Requested-With': 'application/xml'
-          }
-          }
-          )
-          .then((res) => {
-            mangaNames[i] = res.data.data.attributes.title.en;
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      );
-    } else {
-      apiCalls.push(
-        axios.get(mangadex, {
-          params: params,
-          headers: {
-              'X-Requested-With': 'application/xml'
-          }
-          }
-          )
-          .then((res) => {
-            mangaNames[correctNum] = res.data.data.attributes.title.en;
-            ImageParams.mangaId = res.data.data.id;
-            ImageParams.mangaName = res.data.data.attributes.title.en;
-            ImageParams.correctNum = correctNum;
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      );
-    }
-  }
-  console.log(mangaNames)
-  await Promise.all(apiCalls);
-  return mangaNames;
-};
 
 function randomNumber() {
   let random : number = 0;
@@ -124,39 +65,6 @@ function HandleAnswer(answer : number, manga : number) {
   }
   else {
     alert("incorrect");
-  }
-}
-
-async function GetImage() {
-  try {
-    const res1 = await axios.get(corsProxy + ImageParams.baseUrl + ImageParams.mangaId + "/feed", {
-      headers: {
-          'X-Requested-With': 'application/xml'
-      }
-      }
-      );
-    if (res1.data.data.length === 0) {
-      // change the correct answer to the next manga
-      correctNum = randomNumber();
-      console.log("No chapters found");
-      // in this case reload the page
-      window.location.reload();
-      return;
-    }
-
-    ImageParams.chapterId = res1.data.data[Math.floor(Math.random() * res1.data.data.length)].id;
-    console.log(ImageParams.chapterId);
-
-    const res2 = await axios.get(corsProxy + ImageParams.atHome + ImageParams.chapterId, {
-      headers: {
-          'X-Requested-With': 'application/xml'
-          }
-        });
-    
-    ImageParams.imageUrl += res2.data.chapter.hash + "/" + res2.data.chapter.dataSaver[Math.floor(Math.random() * res2.data.chapter.dataSaver.length)];
-    console.log(ImageParams.imageUrl);
-  } catch (error) {
-    console.log(error);
   }
 }
 
@@ -180,10 +88,10 @@ function PlayGame(){
   const handleManga = useCallback(
     (res: any[]) => {
       setManga({
-        mangaOne: res[0],
-        mangaTwo: res[1],
-        mangaThree: res[2],
-        mangaFour: res[3],
+        mangaOne: res.mangaNames[0],
+        mangaTwo: res.mangaNames[1],
+        mangaThree: res.mangaNames[2],
+        mangaFour: res.mangaNames[3],
       });
     },
     [setManga]
@@ -198,9 +106,22 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await CallAPI();
-      handleManga(res);
-      await GetImage();
+      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga')
+      .then((mangaArrayRes) => {
+        return mangaArrayRes.data;
+      })
+
+      handleManga(mangaArrayRes);
+
+      ImageParams.mangaId = mangaArrayRes.mangaId;
+
+      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId)
+      .then((mangaRes) => {
+        return mangaRes.data;
+      })
+
+      ImageParams.imageUrl = mangaRes;
+      
       handleImage(ImageParams.imageUrl);
       setIsLoading(false); // set isLoading to false when all the data has been fetched
     };
@@ -225,7 +146,7 @@ function PlayGame(){
     <div>
       <NavBar />
       <div className="flex flex-row space-x-4 items-center justify-center pt-4">
-        <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
+        <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={ImageParams.imageUrl} alt="NO MANGA FOUND"/>
         <div>{}</div>
       </div>
 
