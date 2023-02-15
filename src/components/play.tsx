@@ -171,5 +171,4 @@ function PlayGame(){
       </div>
   );
 }
-
 export default PlayGame;
