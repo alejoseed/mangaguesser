@@ -7,7 +7,7 @@ import React from "react";
 import NavBar from "./navBar";
 import axios from "axios";
 import HandleColors from "./SortColors";
-
+import loadingScreen from "./loadingScreen.gif";
 export interface Root {
   result: string
   response: string
@@ -41,6 +41,9 @@ export interface playColors {
 
 interface MangaResponse {
   mangaNames: string[];
+  correctNum: number,
+  mangaId : string,
+  imageUrl : string,
 }
 
 let ImageParams = {
@@ -99,13 +102,14 @@ function PlayGame(){
     },
     [setManga]
   );
-  
+
   const handleImage = useCallback(
     (res: string) => {
       setMangaImageUrl(res);
     },
     [setMangaImageUrl]
   );
+  let image;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,14 +120,19 @@ function PlayGame(){
 
       handleManga(mangaArrayRes);
       ImageParams.mangaId = mangaArrayRes.mangaId;
-
-      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId)
+      correctNum = mangaArrayRes.correctNum;
+      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId, { responseType: 'arraybuffer' })
       .then((mangaRes) => {
         return mangaRes.data;
       })
-
-      ImageParams.imageUrl = mangaRes;
       
+      image = URL.createObjectURL(new Blob([mangaRes], { type: 'image/jpeg' }));
+      // remove blob: from the start of the string, also the port is different, it shoudl be 4000
+      image = image.replace("blob:https://expressjs-postgres-production-6029.up.railway.app/", "https://expressjs-postgres-production-6029.up.railway.app/");
+
+      console.log(image);
+      ImageParams.imageUrl = image;
+
       handleImage(ImageParams.imageUrl);
       setIsLoading(false); // set isLoading to false when all the data has been fetched
     };
@@ -138,7 +147,7 @@ function PlayGame(){
     return <div>
       <NavBar />
       <div className="flex flex-row items-center justify-center h-screen">
-        <img src="https://media.tenor.com/LaQN0TCpdawAAAAC/deku-mha.gif"></img>
+        <img src={loadingScreen}></img>
       </div>
       <div>Loading</div>
     </div>
