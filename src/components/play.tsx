@@ -38,7 +38,10 @@ export interface playColors {
   colorThree: string
   colorFour: string
 }
-let corsProxy = "https://black-fog-8967.fly.dev/";
+
+interface MangaResponse {
+  mangaNames: string[];
+}
 
 let ImageParams = {
   correctNum: 0,
@@ -86,7 +89,7 @@ function PlayGame(){
   });
 
   const handleManga = useCallback(
-    (res: any[]) => {
+    (res: MangaResponse) => {
       setManga({
         mangaOne: res.mangaNames[0],
         mangaTwo: res.mangaNames[1],
