@@ -110,6 +110,7 @@ function PlayGame(){
     },
     [setMangaImageUrl]
   );
+  
   let image;
 
   useEffect(() => {
@@ -155,7 +156,7 @@ function PlayGame(){
     <div>
       <NavBar />
       <div className="flex flex-row space-x-4 items-center justify-center pt-4">
-        <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={ImageParams.imageUrl} alt="NO MANGA FOUND"/>
+        <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
         <div>{}</div>
       </div>
 
