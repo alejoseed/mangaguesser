@@ -115,7 +115,6 @@ function PlayGame(){
       })
 
       handleManga(mangaArrayRes);
-
       ImageParams.mangaId = mangaArrayRes.mangaId;
 
       const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId)
