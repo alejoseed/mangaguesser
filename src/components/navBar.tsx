@@ -65,7 +65,7 @@ function NavBar() {
             Play a Fun Game
           </div>
 
-          <div className="hidden ml-auto w-full md:flex md:flex-row md:w-auto">
+          <div className="hidden ml-auto w-full md:flex md:flex-row md:w-autoz">
             <NavBarItems />
           </div>
           <HamNavBar />

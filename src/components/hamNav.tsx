@@ -14,7 +14,7 @@ function HamNavBar() {
             {isOpen && (
                 <div className="absolute bg-[#3894a3] rounded mt-2.5 
                 right-0 w-auto h-auto pl-[3.5rem] pr-[1.5rem] pb-[1rem]
-                 flex flex-col" >
+                 flex flex-col z-10" >
                     <ul className='flex text-[black] flex-col self-end text-xl items-end space-y-8 pt-3 '>
                         <Link to={'/'} className="hover:text-neutral-200 duration-[30ms]">
                             Home

@@ -38,7 +38,6 @@ export interface playColors {
   colorThree: string
   colorFour: string
 }
-
 interface MangaResponse {
   mangaNames: string[];
   correctNum: number,
@@ -145,9 +144,9 @@ function PlayGame(){
   if (isLoading) {
     return <div>
       <NavBar />
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center max-h-full pt-14">
         <img src={loadingScreen}></img>
-        <div>Loading</div>
+        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
       </div>
     </div>
   }
@@ -155,19 +154,22 @@ function PlayGame(){
   return ( 
     <div>
       <NavBar />
-      <div className="flex flex-row space-x-4 items-center justify-center pt-4">
-        <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
-        <div>{}</div>
-      </div>
+      <div>
+        <div className="flex flex-row space-x-4 items-center justify-center pt-4">
+          <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
+          <div>{}</div>
+        </div>
 
-        <div className="flex flex-row space-x-3 pt-3">
-          <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 0)} style={{ backgroundColor: allColors.colorOne }}>{manga.mangaOne}</button>
-          <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 1)} style={{ backgroundColor: allColors.colorTwo }}>{manga.mangaTwo}</button>
-        </div>
-        <div className="flex flex-row space-x-3 pt-3">
-          <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 2)} style={{ backgroundColor: allColors.colorThree }}>{manga.mangaThree}</button>
-          <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 3)} style={{ backgroundColor: allColors.colorFour }}>{manga.mangaFour}</button>
-        </div>
+          <div className="flex flex-row space-x-3 pt-3 max-h-full">
+            <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 0)} style={{ backgroundColor: allColors.colorOne }}>{manga.mangaOne}</button>
+            <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 1)} style={{ backgroundColor: allColors.colorTwo }}>{manga.mangaTwo}</button>
+          </div>
+          <div className="flex flex-row space-x-3 pt-3">
+            <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 2)} style={{ backgroundColor: allColors.colorThree }}>{manga.mangaThree}</button>
+            <button className="buttonManga w-full" onClick={() => HandleAnswer(correctNum, 3)} style={{ backgroundColor: allColors.colorFour }}>{manga.mangaFour}</button>
+          </div>
+      </div>
+      
       </div>
   );
 }
