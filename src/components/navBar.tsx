@@ -58,7 +58,7 @@ function NavBar() {
               alt="logo"
               className="text-yellow-300 wmr-3 h-9 sm:h-9"
             />
-            <span className="text-[#3894a3] text-2xl font-light">NoName</span>
+            <span className="text-[#3894a3] text-2xl font-light">MangaGuesser</span>
           </a>
 
           <div className="ml-auto items-center hidden md:block md:w-auto text-[#3894a3] text-2xl font-light">
