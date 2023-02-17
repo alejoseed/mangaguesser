@@ -135,7 +135,7 @@ function PlayGame(){
       
       image = URL.createObjectURL(new Blob([mangaRes], { type: 'image/jpeg' }));
       // remove blob: from the start of the string, also the port is different, it shoudl be 4000
-      image = image.replace("blob:expressjs-postgres-production-6029.up.railway.app/", "expressjs-postgres-production-6029.up.railway.app/");
+      image = image.replace("blob:https://expressjs-postgres-production-6029.up.railway.app/", "https://expressjs-postgres-production-6029.up.railway.app/");
 
       ImageParams.imageUrl = image;
       handleImage(ImageParams.imageUrl);
