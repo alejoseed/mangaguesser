@@ -114,7 +114,7 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const mangaArrayRes = await axios.get('http://localhost:4000/random_manga' , {headers: {
+      const mangaArrayRes = await axios.get('expressjs-postgres-production-6029.up.railway.app/random_manga' , {headers: {
         'X-Requested-With': 'application/xml',
         'cache-control': 'no-cache'
         }})
