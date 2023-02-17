@@ -114,7 +114,7 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const mangaArrayRes = await axios.get('expressjs-postgres-production-6029.up.railway.app/random_manga' , {headers: {
+      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga' , {headers: {
         'X-Requested-With': 'application/xml',
         'cache-control': 'no-cache'
         }})
@@ -126,7 +126,7 @@ function PlayGame(){
       ImageParams.mangaId = mangaArrayRes.mangaId;
       correctNum = mangaArrayRes.correctNum;
       
-      const mangaRes = await axios.get('expressjs-postgres-production-6029.up.railway.app/' + ImageParams.mangaId, {headers: {
+      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/' + ImageParams.mangaId, {headers: {
         'cache-control': 'no-cache'
     }, responseType: 'arraybuffer' })
       .then((mangaRes) => {
