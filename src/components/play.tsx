@@ -114,10 +114,7 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga' , {headers: {
-        'Allow-Control-Allow-Origin': 'https://mangadex.org',
-        'cache-control': 'no-cache'
-        }})
+      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga')
       .then((mangaArrayRes) => {
         return mangaArrayRes.data;
       })
@@ -126,10 +123,7 @@ function PlayGame(){
       ImageParams.mangaId = mangaArrayRes.mangaId;
       correctNum = mangaArrayRes.correctNum;
       
-      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId, {headers: {
-        'Allow-Control-Allow-Origin': 'https://mangadex.org',
-        'cache-control': 'no-cache'
-    }, responseType: 'arraybuffer' })
+      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId, {responseType: 'arraybuffer' })
       .then((mangaRes) => {
         return mangaRes.data;
       })
