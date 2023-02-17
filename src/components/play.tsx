@@ -114,7 +114,10 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga')
+      const mangaArrayRes = await axios.get('http://localhost:4000/random_manga' , {headers: {
+        'X-Requested-With': 'application/xml',
+        'cache-control': 'no-cache'
+        }})
       .then((mangaArrayRes) => {
         return mangaArrayRes.data;
       })
@@ -122,14 +125,17 @@ function PlayGame(){
       handleManga(mangaArrayRes);
       ImageParams.mangaId = mangaArrayRes.mangaId;
       correctNum = mangaArrayRes.correctNum;
-      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId, { responseType: 'arraybuffer' })
+      
+      const mangaRes = await axios.get('expressjs-postgres-production-6029.up.railway.app/' + ImageParams.mangaId, {headers: {
+        'cache-control': 'no-cache'
+    }, responseType: 'arraybuffer' })
       .then((mangaRes) => {
         return mangaRes.data;
       })
       
       image = URL.createObjectURL(new Blob([mangaRes], { type: 'image/jpeg' }));
       // remove blob: from the start of the string, also the port is different, it shoudl be 4000
-      image = image.replace("blob:https://expressjs-postgres-production-6029.up.railway.app/", "https://expressjs-postgres-production-6029.up.railway.app/");
+      image = image.replace("blob:expressjs-postgres-production-6029.up.railway.app/", "expressjs-postgres-production-6029.up.railway.app/");
 
       ImageParams.imageUrl = image;
       handleImage(ImageParams.imageUrl);
@@ -157,7 +163,6 @@ function PlayGame(){
       <div>
         <div className="flex flex-row space-x-4 items-center justify-center pt-4">
           <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
-          <div>{}</div>
         </div>
 
           <div className="flex flex-row space-x-3 pt-3 max-h-full">
