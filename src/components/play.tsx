@@ -114,8 +114,7 @@ function PlayGame(){
 
   useEffect(() => {
     const fetchData = async () => {
-      const mangaArrayRes = await axios.get('http://localhost:4000/random_manga' , {headers: {
-        'X-Requested-With': 'application/xml',
+      const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga' , {headers: {
         'cache-control': 'no-cache'
         }})
       .then((mangaArrayRes) => {
@@ -126,7 +125,7 @@ function PlayGame(){
       ImageParams.mangaId = mangaArrayRes.mangaId;
       correctNum = mangaArrayRes.correctNum;
       
-      const mangaRes = await axios.get('expressjs-postgres-production-6029.up.railway.app/' + ImageParams.mangaId, {headers: {
+      const mangaRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/image/' + ImageParams.mangaId, {headers: {
         'cache-control': 'no-cache'
     }, responseType: 'arraybuffer' })
       .then((mangaRes) => {
@@ -135,7 +134,7 @@ function PlayGame(){
       
       image = URL.createObjectURL(new Blob([mangaRes], { type: 'image/jpeg' }));
       // remove blob: from the start of the string, also the port is different, it shoudl be 4000
-      image = image.replace("blob:expressjs-postgres-production-6029.up.railway.app/", "expressjs-postgres-production-6029.up.railway.app/");
+      image = image.replace("blob:https://expressjs-postgres-production-6029.up.railway.app/", "https://expressjs-postgres-production-6029.up.railway.app/");
 
       ImageParams.imageUrl = image;
       handleImage(ImageParams.imageUrl);
