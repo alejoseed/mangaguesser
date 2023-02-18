@@ -9,6 +9,9 @@
     body {
         @apply bg-neutral-200;
     }
+    .font-link {
+      font-family: 'Montserrat Alternates', Regular;
+    }
     .lds-ring {
         display: inline-block;
         position: relative;

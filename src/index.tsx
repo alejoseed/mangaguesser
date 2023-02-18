@@ -5,6 +5,8 @@ import App from './App';
 import PlayGame from './components/play';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
+import DevPlay from './components/devPlay';
+import PlayPage from './components/playPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const root = ReactDOM.createRoot(
@@ -19,7 +21,17 @@ const router = createBrowserRouter([
   },
   {
     path: '/play',
-    element: <PlayGame />,
+    element: <PlayPage />,
+    errorElement: <ErrorPage/>
+  },
+  {
+    path: '/devplay',
+    element: <DevPlay />,
+    errorElement: <ErrorPage/>
+  },
+  {
+    path: '/playpage',
+    element: <PlayPage />,
     errorElement: <ErrorPage/>
   },
 ]);
