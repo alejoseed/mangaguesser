@@ -1,13 +1,13 @@
 import React from "react";
 import NavBar from "./navBar";
-import DevPlay from "./devPlay";
+import Play from "./Play";
 
 function PlayPage(){
 
   return ( 
     <div>
       <NavBar />
-      <DevPlay />
+      <Play />
     </div>
   );
 }

@@ -4,9 +4,7 @@ import {
   useCallback,
 } from "react";
 import React from "react";
-import NavBar from "./navBar";
 import axios from "axios";
-import HandleColors from "./SortColors";
 import loadingScreen from "./loadingScreen.gif";
 
 export interface Root {
@@ -54,7 +52,7 @@ let ImageParams = {
   chapterId : "",
 }
 
-function DevPlay(){
+function Play(){
   const [isLoading, setIsLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [hp, setHp] = useState(100);
@@ -181,4 +179,4 @@ function DevPlay(){
     </div>
   );
 }
-export default DevPlay;
+export default Play;
