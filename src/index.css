@@ -12,9 +12,6 @@
     .font-link {
       font-family: 'Montserrat Alternates', Regular;
     }
-    .entire-screen{
-        height: 100svh;
-    }
     .lds-ring {
         display: inline-block;
         position: relative;
