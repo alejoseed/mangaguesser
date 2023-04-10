@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 function HamNavBar() {
     const [isOpen, setIsOpen] = useState(false);
     return(
-        <div className='ml-auto md:hidden'>
+        <div className='ml-auto md:hidden font-link'>
             <Hamburger toggled={isOpen} toggle={setIsOpen} />
             {isOpen && (
                 <div className="absolute bg-[#3894a3] rounded mt-2.5 
@@ -27,9 +27,6 @@ function HamNavBar() {
                         </Link>
                         <Link to="/contact" className="hover:text-neutral-200 duration-[30ms]">
                             Contact
-                        </Link>
-                        <Link to="/api" className="hover:text-neutral-200 duration-[30ms]">
-                            Test API
                         </Link>
                     </ul>
                 </div>

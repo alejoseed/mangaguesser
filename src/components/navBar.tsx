@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function NavBarItems() {
   return (
-    <div>
+    <div className="font-link">
       <ul className="flex md:static text-[#3894a3] font-sans text-lg">
         <li>
           <Link

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
 import PlayPage from './components/playPage';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import TestingPage from './components/testingPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
   {
     path: '/play',
     element: <PlayPage />,
+    errorElement: <ErrorPage/>
+  },
+  {
+    path: '/test',
+    element: <TestingPage />,
     errorElement: <ErrorPage/>
   },
 ]);

@@ -52,12 +52,15 @@ let ImageParams = {
   chapterId : "",
 }
 
+// This variable controls the pop up timeout. Since I want 
+let popOpTime : any = null;
+
 function Play(){
   const [isLoading, setIsLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [hp, setHp] = useState(100);
   const [streak, setStreak] = useState(0);
-  const [mangaId, setMangaId] = useState("");
+  const [popUp, setPopUp] = useState(false);
   const [correctNum, setCorrectNum] = useState(0);
   const [mangaImageUrl, setMangaImageUrl] = useState("");
   const [manga, setManga] = useState({
@@ -77,18 +80,12 @@ function Play(){
     },
     [setManga]
   );
-  
-  const handleId = useCallback(
-    async (res: string) => {
-      setMangaId(res);
-    },
-    [setMangaId]
-  );
 
   const handleImage = useCallback(
     (res: string) => {
       setMangaImageUrl(res);
-      setIsLoading(false);
+      clearTimeout(popOpTime);
+      setIsLoading(false); 
     },
     [setMangaImageUrl]
   );
@@ -124,13 +121,16 @@ function Play(){
   function HandleAnswer(userAnswer : number) {
     if (userAnswer === correctNum) {
       setScore(score + 1);
-      alert("Correct! +10 HP (I will change this to be a cool popup don't worry :)")
-      setIsLoading(true);
-
-      fetchData();
+      setPopUp(true);
       if (score >= streak)
         setStreak(score);
       hp + 10 > 100 ? setHp(100) : setHp(hp + 10);
+
+      popOpTime = setTimeout(() => {
+        setPopUp(false);
+        setIsLoading(true);
+        fetchData();
+      }, 1000);
     }
     else if (userAnswer !== correctNum){
       if(score > 0)
@@ -147,35 +147,51 @@ function Play(){
   if (isLoading) {
     return <div>
       <div className="flex flex-col items-center justify-center max-h-full pt-14">
-        <img src={loadingScreen}></img>
-        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <img src={loadingScreen} className="rounded-lg shadow-lg max-w-[360px] md:max-w-lg"/>
+        <div className="lds-ring pt-3"><div></div><div></div><div></div><div></div></div>
       </div>
     </div>
   }
-  
+
   return ( 
-    <div>
+    <div className="font-link">
       <div className="mx-2">
         <div className="flex flex-col space-x-4 items-center justify-center pt-4">
-          <img className="rounded-xl shadow-xl max-w-full max-h-full md:w-[350px] md:h-[550px] scale-75 md:scale-100" src={mangaImageUrl} alt="NO MANGA FOUND"/>
-          <div className="rounded-xl shadow-xl backdrop-blur bg-sky-300 font-link">
+          
+          {popUp && 
+          <div className="grid absolute z-10 bg-slate-500 w-96 h-48 justify-center items-center shadow-lg rounded-lg">
+            <h1 className="text-white text-2xl">You are correct! +10 HP</h1>
+          </div>}
+          
+          <img className="rounded-xl shadow-xl max-w-[330px] md:max-w-[360px]" src={mangaImageUrl} alt="NO MANGA FOUND"/>
+          
+          <div className="mt-4 rounded-xl shadow-xl backdrop-blur bg-sky-300 font-link">
             <p>Current streak:   {streak}</p>
             <p>Current score:     {score}</p>
             <p>Current HP:           {hp}</p>
           </div>
         </div>
-          <div>
-            <div className="flex flex-row space-x-3 pt-3 max-h-full">
-              <button className="buttonManga w-full" onClick={() => HandleAnswer(0)} style={{ backgroundColor: "#89CFF0" }}>{manga.mangaOne}</button>
-              <button className="buttonManga w-full" onClick={() => HandleAnswer(1)} style={{ backgroundColor: "#E3735E" }}>{manga.mangaTwo}</button>
+        <footer>
+          <div className="grid gap-x-4 grid-cols-2 items-center pt-3">
+            <div className="grid grid-cols-1 gap-y-2">
+              <button className="buttonManga w-full" onClick={() => HandleAnswer(0)} style={{ backgroundColor: "#89CFF0", 
+              fontSize: manga.mangaOne.length > 41 ? '12px' : 'inherit' }}>
+              {manga.mangaOne}</button>
+              <button className="buttonManga w-full" onClick={() => HandleAnswer(1)} style={{ backgroundColor: "#E3735E",
+              fontSize: manga.mangaTwo.length > 41 ? '12px' : 'inherit'
+              }}>{manga.mangaTwo}</button>
             </div>
-            <div className="flex flex-row space-x-3 pt-3">
-              <button className="buttonManga w-full" onClick={() => HandleAnswer(2)} style={{ backgroundColor: "#36454F" }}>{manga.mangaThree}</button>
-              <button className="buttonManga w-full" onClick={() => HandleAnswer(3)} style={{ backgroundColor: "#009e60" }}>{manga.mangaFour}</button>
+            <div className="grid grid-cols-1 gap-y-2">
+              <button className="buttonManga w-full" onClick={() => HandleAnswer(2)} style={{ backgroundColor: "#36454F",
+              fontSize: manga.mangaThree.length > 41 ? '12px' : 'inherit'
+              }}>{manga.mangaThree}</button>
+              <button className="buttonManga w-full" onClick={() => HandleAnswer(3)} style={{ backgroundColor: "#009e60",
+              fontSize: manga.mangaFour.length > 41 ? '12px' : 'inherit'
+              }}>{manga.mangaFour}</button>
             </div>
           </div>
+        </footer>
       </div>
-      
     </div>
   );
 }

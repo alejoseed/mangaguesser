@@ -69,6 +69,10 @@
 @layer components{
     .buttonManga{
         @apply h-12 w-12 rounded-md shadow-md hover:duration-100 hover:-translate-y-3;
+      }
+    .blur {
+        .position: relative;
+        .z-index: 0;
+        .filter: blur(5px);
     }
-
 }
