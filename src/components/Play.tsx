@@ -98,7 +98,7 @@ function Play(){
   );
 
   const fetchData = async () => {
-    const mangaArrayRes = await axios.get('https://expressjs-postgres-production-6029.up.railway.app/random_manga')
+    const mangaArrayRes = await axios.get('https://mangaguesser.up.railway.app/random_manga')
     .then((mangaArrayRes) => {
       return mangaArrayRes.data;
     })
@@ -106,7 +106,7 @@ function Play(){
     handleManga(mangaArrayRes);
     handleCorrectNum(mangaArrayRes.correctNum);
 
-    fetch('https://expressjs-postgres-production-6029.up.railway.app/image/' + mangaArrayRes.mangaId)
+    fetch('https://mangaguesser.up.railway.app/image/' + mangaArrayRes.mangaId)
     .then(response => response.blob())
     .then(blob => {
       const url = URL.createObjectURL(blob);
